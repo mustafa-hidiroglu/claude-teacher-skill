@@ -1,0 +1,14 @@
+{"t":0,"agent":"aaac3a5","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"ascout-","agent_type":"scout-c-programming","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ascout-","agent_type":"scout-c-programming","event":"agent_stop","success":true,"duration_ms":1132288}
+{"t":0,"agent":"a66c6e0","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"ae58565","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"a111476","agent_type":"verifier","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"af13f39","agent_type":"verifier","event":"agent_stop","success":true,"duration_ms":7683}
+{"t":0,"agent":"ae9d9c3","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"ad27bed","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"a111476","agent_type":"verifier","event":"agent_stop","success":true,"duration_ms":42224}
+{"t":0,"agent":"afb2f84","agent_type":"verifier","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"plugin-authoring"}
+{"t":0,"agent":"afb2f84","agent_type":"verifier","event":"agent_stop","success":true,"duration_ms":11673}
+{"t":0,"agent":"afb2f84","agent_type":"verifier","event":"agent_stop","success":true,"duration_ms":16671}

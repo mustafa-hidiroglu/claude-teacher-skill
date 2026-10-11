@@ -50,7 +50,9 @@ it found, half of them at the wrong level. Here the scout writes only for the
 teacher. In Claude Code, a subagent's result goes back to the agent that
 launched it. It is not posted into the conversation, and at most it appears as
 collapsed tool output. The teacher sends follow-up briefs to the same scout by
-name, so the two hold a running conversation out of your way.
+its agent ID, so the two hold a running conversation out of your way. The
+scout is deliberately left unnamed: a named agent becomes a teammate, and its
+messages would show up in your chat.
 `~/.claude/teacher/<topic>/channel.md` keeps a one-line-per-message log of
 that exchange.
 
@@ -84,7 +86,7 @@ https://web-apps.thecoatlessprofessor.com/coding/big-o-visualizer.html
 
 | Component | Type | What it does |
 | --- | --- | --- |
-| [`teach`](skills/teach/SKILL.md) | Skill | The teacher. Diagnoses your level, runs the explain → show → check → adapt loop, vets and curates resources, briefs the scout, and saves progress. |
+| [`teach`](skills/teach/SKILL.md) | Skill | The teacher. Diagnoses your level, runs the explain → show → check → adapt loop, vets and curates resources, briefs the scout, and saves progress. Sub-commands: `quiz`, `exercise`, `homework`, `quit`. |
 | [`scout`](agents/scout.md) | Subagent | The researcher. Searches the web with read-only tools, opens the best candidates to verify them, and returns a structured report to the teacher only. |
 
 ## Install
@@ -136,10 +138,30 @@ teach me Bayesian statistics for an exam next week
 /teach recursion            ← later: resumes from progress.md
 ```
 
-While learning you can say things like:
+### Sub-commands
+
+| Command | What it does |
+| --- | --- |
+| `/teach <concept>` | Start a lesson, or resume where you left off |
+| `/teach quiz [concept]` | Five questions on what you've covered, one at a time, then a score. Leans on what you got wrong before. Misses go back on your study list. |
+| `/teach exercise [concept]` | A hands-on task to do now, 5–15 min. For code topics it creates a starter file with `TODO`s in your lab folder, gives you the build-and-run command, hints when you're stuck, and reviews your result. `hands-on` works too. |
+| `/teach homework [concept]` | A take-home assignment of 3–5 tasks, saved to `homework/hw-N.md`. No solutions included. |
+| `/teach homework check [N] [concept]` | Grades your homework (the latest one by default), gives feedback task by task, and updates your progress. It asks before running any of your code. |
+| `/teach quit` | Saves progress, stops the scout, gives a recap, and leaves teaching mode |
+
+The concept is optional: by default it uses the current lesson, or your most
+recent topic. If your topic starts with one of these words, use
+`/teach learn <topic>` (e.g. `/teach learn exercise physiology`). Plugin
+installs use `/teacher:teach` in the same way.
+
+For code topics the teacher asks once for a **lab folder** (e.g. `~/c-lab`),
+where exercise starter files and your homework code live. It only ever
+creates new files there and never overwrites one.
+
+While learning you can also just say:
 
 - `slower` / `harder` / `skip`
-- `quiz me`
+- `quiz me` / `give me homework` / `let's do an exercise` / `quit`
 - `give me resources`: the teacher shows what it has been holding back
 - `where do these links come from?`: it explains and points you to `channel.md`
 
@@ -149,7 +171,8 @@ All state is local, in `~/.claude/teacher/<topic>/`:
 
 | File | Contents |
 | --- | --- |
-| `progress.md` | Your goal, level, preferred formats, what's solid, what's shaky, what's next, and resources already shown |
+| `progress.md` | Your goal, level, preferred formats, what's solid, what's shaky, what's next, resources already shown, quiz scores, and homework status |
+| `homework/hw-N.md` | Each homework assignment, with space for your answers |
 | `channel.md` | One line per side-channel message: each brief sent and a summary of each report returned |
 
 Delete a topic folder to start that topic fresh, or delete

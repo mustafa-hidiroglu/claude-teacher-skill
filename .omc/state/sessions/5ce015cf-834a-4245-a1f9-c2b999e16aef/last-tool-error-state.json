@@ -1,0 +1,7 @@
+{
+  "tool_name": "WebFetch",
+  "tool_input_preview": "{\"url\":\"https://en.cppreference.com/w/c/language.html\",\"prompt\":\"What does this page cover; does it list C23/C11 sections; is it a reference not tutorial?\"}",
+  "error": "Unable to verify if domain en.cppreference.com is safe to fetch. This may be due to network restrictions or enterprise security policies blocking claude.ai.",
+  "timestamp": "2026-10-11T13:16:42.983Z",
+  "retry_count": 1
+}
