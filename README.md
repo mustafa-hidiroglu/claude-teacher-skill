@@ -165,6 +165,20 @@ While learning you can also just say:
 - `give me resources`: the teacher shows what it has been holding back
 - `where do these links come from?`: it explains and points you to `channel.md`
 
+### Teaching-mode band (plugin install)
+
+While a lesson is running, a band above the prompt shows that you're in
+teaching mode, along with the topic and what you're doing:
+
+```
+ 🎓 TEACHING MODE  C programming · quiz · /teach quit to leave
+```
+
+The status line also shows `🎓 Teaching · <topic>`. Both go away on
+`/teach quit`, or when you tell the teacher you're done. The band is a
+Claude Code UI hook (`hooks/register.tsx`), so it comes with the plugin
+install (option 3). A manual copy of the skill folder works without it.
+
 ## Files it keeps
 
 All state is local, in `~/.claude/teacher/<topic>/`:

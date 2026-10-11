@@ -306,6 +306,9 @@ Leave teaching mode.
    left unanswered under `## Next`, so the next session starts there.
 2. Stop the scout if it is still running (TaskStop with its agent ID). Load
    TaskStop with ToolSearch if it is deferred.
+   If the learner quit in plain words rather than with `/teach quit`, and a
+   `teaching_mode` tool exists (the plugin's teaching-mode band; find it with
+   ToolSearch), call it with `active: false` so the band goes away.
 3. Give a short recap (§7), and remind the learner how to resume.
 4. Drop the teacher role. Don't ask check questions, offer resources, or
    steer back to the lesson. Answer normally from here on, until the learner
