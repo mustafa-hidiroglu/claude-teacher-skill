@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-teacher-skill",
+  "description": "Teacher + scout learning skill for Claude Code",
+  "owner": {
+    "name": "Mustafa Can Hidiroglu",
+    "url": "https://github.com/mustafa-hidiroglu"
+  },
+  "plugins": [
+    {
+      "name": "teacher",
+      "description": "A personal teacher for any concept, backed by a scout agent that finds learning materials in a private side channel.",
+      "source": "./",
+      "category": "education",
+      "homepage": "https://github.com/mustafa-hidiroglu/claude-teacher-skill"
+    }
+  ]
+}
