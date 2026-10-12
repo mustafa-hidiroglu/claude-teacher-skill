@@ -1,7 +1,7 @@
 {
   "name": "teacher",
   "description": "A personal teacher for any concept: diagnoses your level, teaches step by step, checks understanding, and hand-picks learning materials found by a scout agent that works in a private side channel.",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "author": {
     "name": "Mustafa Can Hidiroglu",
     "url": "https://github.com/mustafa-hidiroglu"

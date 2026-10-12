@@ -31,8 +31,10 @@ connect.
   - [Quiz](#quiz-teach-quiz)
   - [Hands-on exercise](#hands-on-exercise-teach-exercise)
   - [Homework](#homework-teach-homework)
+  - [Flashcards, review, teach-back, cheat sheet, progress](#flashcards-review-teach-back-cheat-sheet-progress)
   - [Quit](#quit-teach-quit)
-- [Teaching-mode band](#teaching-mode-band)
+- [Teaching mode on screen](#teaching-mode-on-screen)
+  - [Progress pane](#progress-pane)
 - [How it works](#how-it-works)
 - [Files it keeps](#files-it-keeps)
 - [Safety](#safety)
@@ -140,12 +142,17 @@ A few things to notice:
 | `/teach exercise [topic]` | A hands-on task to do right now (`hands-on` works too) |
 | `/teach homework [topic]` | A take-home assignment saved to a file |
 | `/teach homework check [N]` | Grade your homework |
+| `/teach flashcards [topic]` | Build a flashcard deck and drill it (spaced repetition) |
+| `/teach review [topic]` | A 5-minute warm-up on what you're starting to forget |
+| `/teach teach-back [topic]` | You explain it, the teacher finds the gaps (`feynman` works too) |
+| `/teach cheatsheet [topic]` | A one-page summary saved to a file |
+| `/teach progress [topic]` | Where you stand and the best next step |
 | `/teach quit` | Save progress and leave teaching mode |
 
 The topic is optional everywhere except the first lesson. Without one, the
 teacher uses the current lesson or your most recent topic. All of these also
 work in plain words mid-lesson: "quiz me", "give me homework", "let's do an
-exercise", "quit".
+exercise", "let me explain it back", "how am I doing", "quit".
 
 If your topic starts with one of the command words, put `learn` in front:
 `/teach learn exercise physiology`.
@@ -274,6 +281,43 @@ you ask. Before running any of your code it tells you the exact command and
 waits for your yes. It builds that command itself, from your `hw<N>_*` files
 only.
 
+### Flashcards, review, teach-back, cheat sheet, progress
+
+- **`/teach flashcards`** turns what you've covered into a deck
+  (`flashcards.md`) and drills up to 10 cards: you answer, see the answer, and
+  say whether you got it. Cards you get move up a box (1–5) and come back
+  later (1, 3, 7, 14, then 30 days); missed cards go back to box 1 and come
+  back tomorrow. Only cards that are due get drilled, so a few minutes a day
+  keeps everything fresh.
+- **`/teach review`** is a quick warm-up for the start of a session: 3–5
+  questions on your shaky items and the ones you haven't seen in a while. One
+  line of feedback each, no score announced.
+- **`/teach teach-back`** flips the roles. You explain a concept in your own
+  words, the teacher plays a curious friend and asks naive follow-ups, then
+  tells you exactly which part of your explanation had a gap.
+- **`/teach cheatsheet`** writes `cheatsheet.md`: one screen with every
+  covered idea, a minimal example each, a "watch out" list from your
+  mistakes, and the best 1–3 resources you were shown.
+- **Hints:** say "give me a hint" (or press Hint) during a question,
+  exercise or homework task. Each hint is a little bigger, and none gives
+  the answer away.
+- **Mistake journal:** every misconception the teacher spots goes into
+  `mistakes.md` with its fix. Reviews aim at recent mistakes first, and the
+  cheat sheet's "watch out" list comes from it.
+- **`/teach progress`** is a read-only dashboard: solid vs shaky, quiz trend,
+  homework status, flashcard boxes, what's next, and the one command worth
+  running next.
+
+```
+Teacher: C programming — beginner, aiming at embedded
+  Covered:    5 (4 solid, 1 shaky: signed overflow)
+  Quizzes:    3/5 → 4/5
+  Homework:   hw-1 waiting to be checked
+  Flashcards: box1 2 · box2 5 · box3 3
+  Next:       & and %p, pointers, pointer arithmetic
+Best next step: /teach homework check
+```
+
 ### Quit: `/teach quit`
 
 This saves your progress, including any question you hadn't answered yet, so
@@ -291,22 +335,83 @@ Resume anytime with /teach C programming.
 
 ---
 
-## Teaching-mode band
+## Teaching mode on screen
 
-While teaching mode is on, a band above the prompt makes it obvious:
+While teaching mode is on, you can't miss it. The lesson reads like a chat
+between two people, and a framed band with buttons sits above the prompt:
 
 ```
- 🎓 TEACHING MODE  C programming · quiz · /teach quit to leave
+╭────────────────────────────────────────────────────────────────────╮
+│ 🎓 Teacher                                                         │
+│ An unsigned char holds 0–255. What does 255 + 1 give?              │
+╰────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────╮
+│ 🙋 You                                                             │
+│ 0, it wraps around                                                 │
+╰────────────────────────────────────────────────────────────────────╯
+
+╔════════════════════════════════════════════════════════════════════╗
+║  🎓 TEACHING MODE  C programming · quiz · ⏱ 2:14 · 🔥 4-day streak ║
+║ q: Quiz  h: Hint  c: Cards  r: Review  p: Progress  x: Quit        ║
+║ click a button, or ctrl+x tab then its key · /teach quit to leave  ║
+╚════════════════════════════════════════════════════════════════════╝
 ```
 
-The left label is white on magenta, the topic is in magenta, and the current
-activity (lesson, quiz, exercise, homework, homework check) is dimmed. The
-status line also shows `🎓 Teaching · C programming`. Both turn on with
-`/teach` and off when you quit, whether you use `/teach quit` or just say
-"quit".
+- **Chat boxes:** the teacher's replies are boxed with a `🎓 Teacher`
+  heading, and your own messages in a cyan `🙋 You` box. Only messages from
+  teaching mode get boxes, so when you scroll back you can see exactly where
+  the lesson started and stopped. A reply split by tool calls draws as a few
+  stacked boxes, with the heading on the first.
+- **Colour per activity:** magenta while being taught, yellow while being
+  tested (quiz, review, homework check), green while doing (exercise,
+  homework), blue for recall practice (flashcards, teach-back). The band and
+  the teacher's box both change.
+- **Buttons:** Quiz, Hint, Cards, Review and Quit send the same words you'd
+  type ("quiz me", "give me a hint", …). Progress opens the side pane. Click
+  one, or press ctrl+x tab to reach the band and then its letter. The keys are
+  letters on purpose, so typing a number to answer a quiz never presses a
+  button. While the teacher is still replying, only Progress is shown.
+- **Timer:** quizzes, reviews, exercises and flashcard drills show how long
+  you've been at it.
+- **Streak:** `🔥 N-day streak` once you've studied two days in a row (only
+  days with teaching mode on count). It's kept across sessions.
+- **Toasts:** "🎓 Entered teaching mode · <topic>" when you start, "Left
+  teaching mode · back to normal Claude" when you quit, and at startup
+  "🃏 3 flashcards due · C programming — /teacher:teach flashcards" when
+  cards are waiting.
+- **Status line:** `🎓 Teaching · C programming`.
 
-The band is a Claude Code UI hook (`hooks/register.tsx`), so it comes with the
-**plugin install**. A hand-copied skill works the same, just without the band.
+### Progress pane
+
+`/teacher:teach-panel` (or the band's Progress button) opens a side pane
+that stays up while you learn and refreshes whenever the teacher saves:
+
+```
+C programming
+embedded · beginner
+
+Covered  █████████░░░  4 solid · 1 shaky
+  shaky: signed overflow
+Quizzes  ▅▆▇  latest 80%
+Cards    3 due  boxes 1–5: 2 5 3 0 0
+Homework 1 open
+
+Next
+  1. & and %p
+  2. pointers
+
+Recent mistakes
+  2026-10-11 · signed overflow · it wraps → it is undefined behaviour
+```
+
+On a narrow terminal the pane waits until the window is wide enough to dock
+it beside the chat.
+
+All of this turns on with `/teach` and off when you quit, whether you use
+`/teach quit` or just say "quit". These are Claude Code UI hooks
+(`hooks/register.tsx`), so they come with the **plugin install**. A
+hand-copied skill works the same, just without them. Boxes are kept for the
+session; after a restart, earlier lesson messages draw without them.
 
 ---
 
@@ -357,6 +462,9 @@ Everything is local, in `~/.claude/teacher/<topic>/`:
 | --- | --- |
 | `progress.md` | Your goal, level and preferences; what's solid or shaky; what's next; resources shown; quiz scores; homework status; your lab folder |
 | `homework/hw-N.md` | Each homework assignment, with space for your answers |
+| `flashcards.md` | Your flashcard deck, with each card's box, last review and next due date |
+| `mistakes.md` | Your mistake journal: one line per misconception, and its fix |
+| `cheatsheet.md` | The one-page summary from `/teach cheatsheet` |
 | `channel.md` | One line per side-channel message: each brief sent, and a summary of each report |
 
 An example `progress.md` after two short sessions:
@@ -405,7 +513,7 @@ hostile.
   and pages that need a login or payment are skipped.
 - **Files stay contained.** Topic names are sanitized before they become
   folder names. The lab folder must be under your home directory and outside
-  dot-directories, and existing files are never overwritten.
+  dot-directories, and existing lab files are never overwritten.
 - **Your code runs only with your yes.** Homework checking builds the run
   command itself and asks first.
 
@@ -413,7 +521,7 @@ hostile.
 
 ## Install options
 
-**Plugin (recommended, includes the band)**
+**Plugin (recommended, includes the band, chat boxes and toasts)**
 
 ```
 /plugin install teacher --marketplace mustafa-hidiroglu/claude-teacher-skill
