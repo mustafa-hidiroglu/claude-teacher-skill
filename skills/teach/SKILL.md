@@ -464,7 +464,7 @@ A read-only dashboard. Nothing is written.
    lesson. Without a concept and no topic folders, list nothing and ask what
    they'd like to learn.
 4. If the `teaching_mode` tool exists (the plugin is installed), mention
-   once per conversation that `/teacher:teach-panel` (or the band's
+   once per conversation that `/teach-panel` (or the band's
    Progress button) keeps this dashboard open in a side pane.
 
 ## 17. Mistake journal

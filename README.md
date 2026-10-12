@@ -383,7 +383,7 @@ between two people, and a framed band with buttons sits above the prompt:
 
 ### Progress pane
 
-`/teacher:teach-panel` (or the band's Progress button) opens a side pane
+`/teach-panel` (or the band's Progress button) opens a side pane
 that stays up while you learn and refreshes whenever the teacher saves:
 
 ```
